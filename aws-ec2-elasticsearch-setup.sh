@@ -107,7 +107,7 @@ inject_to_file.sh \
 service elasticsearch start
 chkconfig --add elasticsearch
 
-sleep 3
+sleep 10
 curl ${private_ip:?}:9200/_cluster/health?pretty
 
 exit

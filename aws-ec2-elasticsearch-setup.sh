@@ -13,7 +13,9 @@ PROGNAME=${PROGNAME%.*}
 
 usage () {
     printf "$PROGNAME\n"
-    printf "\t[-c] [-u] <VERSION>\n\n"
+    printf "\t[-c]\n"
+    printf "\t[-u]\n"
+    printf "\t<VERSION>\n\n"
 
     printf "OPTIONS\n"
     printf "\t[-c]\n\n"

@@ -73,6 +73,7 @@ while getopts cuh opt; do
 done
 shift
 
+[[ -z $1 ]] && usage
 VERSION=${1:?} # eg: 2.4.0
 
 URL="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/${VERSION:?}/elasticsearch-${VERSION:?}.rpm"

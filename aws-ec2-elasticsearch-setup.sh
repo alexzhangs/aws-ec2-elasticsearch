@@ -11,6 +11,23 @@ fi
 PROGNAME=${0##*/}
 PROGNAME=${PROGNAME%.*}
 
+usage () {
+    printf "$PROGNAME\n"
+    printf "\t[-c] [-u] <VERSION>\n\n"
+
+    printf "OPTIONS\n"
+    printf "\t[-c]\n\n"
+    printf "\tUse cached installation package.\n\n"
+
+    printf "\t[-u]\n\n"
+    printf "\tUpgrade package.\n\n"
+
+    printf "\t<VERSION>\n\n"
+    printf "\tVersion of package.\n\n"
+
+    exit 255
+}
+
 get_ec2_private_ip () {
     curl http://169.254.169.254/latest/meta-data/local-ipv4
 }
@@ -41,14 +58,35 @@ get_total_memory_size () {
 }
 
 
+while getopts cuh opt; do
+    case $opt in
+        c)
+            cache=1
+            ;;
+        u)
+            update=1
+            ;;
+        h|*)
+            usage
+            ;;
+    esac
+done
+shift
+
 VERSION=${1:?} # eg: 2.4.0
 
 URL="https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/${VERSION:?}/elasticsearch-${VERSION:?}.rpm"
 FILE="elasticsearch-${VERSION:?}.rpm"
 
-wget "$URL"
-rpm -i "$FILE"
+if [[ $cache -ne 1 ]]; then
+    wget -c "$URL"
+fi
 
+if [[ $update -eq 1 ]]; then
+    rpm -U "$FILE"
+else
+    rpm -i "$FILE"
+fi
 
 plugins=(cloud-aws analysis-smartcn)
 for p in "${plugins[@]}"; do

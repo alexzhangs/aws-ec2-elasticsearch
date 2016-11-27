@@ -49,7 +49,6 @@ FILE="elasticsearch-${VERSION:?}.rpm"
 wget "$URL"
 rpm -i "$FILE"
 
-aws-ec2-swap.sh 4096 # MB
 
 plugins=(cloud-aws analysis-smartcn)
 for p in "${plugins[@]}"; do

@@ -71,7 +71,7 @@ while getopts cuh opt; do
             ;;
     esac
 done
-shift
+shift $((OPTIND - 1))
 
 [[ -z $1 ]] && usage
 VERSION=${1:?} # eg: 2.4.0

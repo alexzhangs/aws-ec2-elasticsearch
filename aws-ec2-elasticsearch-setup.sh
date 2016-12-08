@@ -31,7 +31,6 @@ usage () {
 
 plugin_is_exist () {
     local name=${1:?}
-    /usr/share/elasticsearch/bin/plugin list | grep -w "$name" > /dev/null
 }
 
 install_plugin () {

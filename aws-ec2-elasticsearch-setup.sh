@@ -42,7 +42,7 @@ install_plugin () {
     if plugin_is_exist "$name"; then
         echo "plugin $name already installed"
     else
-        /usr/share/elasticsearch/bin/plugin install -b "$name"
+        /usr/share/elasticsearch/bin/elasticsearch-plugin install -b "$name"
     fi
 }
 

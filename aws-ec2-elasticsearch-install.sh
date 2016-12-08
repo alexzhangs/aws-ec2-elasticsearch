@@ -6,6 +6,8 @@ BASE_DIR="$(cd "$(dirname "$0")"; pwd)"
 PROGNAME=${0##*/}
 
 usage () {
+    printf "Install Elasticsearch 5.0.x on AWS EC2 instance.\n\n"
+
     printf "$PROGNAME\n"
     printf "\t[-f]\n"
     printf "\t[-h]\n"

@@ -6,6 +6,8 @@ BASE_DIR="$(cd "$(dirname "$0")"; pwd)"
 PROGNAME=${0##*/}
 
 usage () {
+    printf "Setup Elasticsearch 5.0.x on AWS EC2 instance.\n\n"
+
     printf "$PROGNAME\n"
     printf "\t[-n CLUSTER_NAME]\n"
     printf "\t[-p PLUGIN_NAME] ...\n"
@@ -31,6 +33,7 @@ usage () {
 
 plugin_is_exist () {
     local name=${1:?}
+    /usr/share/elasticsearch/bin/elasticsearch-plugin list | grep -w "$name" > /dev/null
 }
 
 install_plugin () {

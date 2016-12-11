@@ -5,12 +5,22 @@ Install Elasticsearch on AWS EC2 instance.
 ## Get code
 
 ```
+sudo yum install -y git
 git clone https://github.com/alexzhangs/aws-ec2-elasticsearch.git
 ```
 
 ## Installation Elasticsearch
 
-Elasticsearch is not avalaible in AWS build in yum repo, you will need
+Start from Elasticsearch 5.x, it requires java 1.8.
+First upgrade java version from 1.7 to 1.8 if needs.
+
+```
+yum install -y java-1.8.0-openjdk
+echo 2 | /usr/sbin/alternatives --config java
+java -version
+```
+                
+Elasticsearch is not avalaible in AWS built-in yum repo, you will need
 to provide a repo URL to this script.
 
 I provide a repo URL at
@@ -51,14 +61,14 @@ sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh \
 Or you can install Elasticsearch from a RPM file path or URL, this is
 useful if experiencing slow network during package download from yum repo.
 
-Local path:
+from local file:
 
 ```
 sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh \
     -f ~/elasticsearch.rpm
 ```
 
-URL:
+from URL:
 
 ```
 sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh \

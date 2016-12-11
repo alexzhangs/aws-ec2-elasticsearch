@@ -75,7 +75,6 @@ calc_es_heap_size () {
 
 
 plugins=()
-es_settings=()
 settings=()
 while getopts n:p:s:l:o:h opt; do
     case $opt in

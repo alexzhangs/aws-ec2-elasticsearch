@@ -20,7 +20,7 @@ yum install -y java-1.8.0-openjdk
 echo 2 | /usr/sbin/alternatives --config java
 java -version
 ```
-                
+
 Elasticsearch is not avalaible in AWS built-in yum repo, you will need
 to provide a repo URL to this script.
 

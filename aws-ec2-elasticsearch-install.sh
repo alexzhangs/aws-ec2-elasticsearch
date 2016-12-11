@@ -6,23 +6,30 @@ BASE_DIR="$(cd "$(dirname "$0")"; pwd)"
 PROGNAME=${0##*/}
 
 usage () {
-    printf "Install Elasticsearch 5.0.x on AWS EC2 instance.\n\n"
+    printf "Install Elasticsearch on AWS EC2 instance.\n\n"
 
     printf "$PROGNAME\n"
-    printf "\t[-f]\n"
-    printf "\t[-h]\n"
-    printf "\t[VERSION]\n"
+    printf "\t[-f RPM_PATH | RPM_URL]\n"
+    printf "\t[-r REPO_URL]\n"
+    printf "\t[-n REPO_NAME]\n"
+    printf "\t[-v VERSION]\n"
+    printf "\t[-h]\n\n"
 
     printf "OPTIONS\n"
-    printf "\t[-f]\n\n"
-    printf "\tUse local installation package instead of installing from official yum repo.\n"
-    printf "\tInstalling from official yum repo sometimes is extremely slow(10KB/s) from China.\n\n"
+    printf "\t[-f RPM_PATH | RPM_URL]\n\n"
+    printf "\tRPM package PATH or URL, -v VERSION is ignored with -f.\n\n"
+
+    printf "\t[-r REPO_URL]\n\n"
+    printf "\tRepo file URL.\n\n"
+
+    printf "\t[-n REPO_NAME]\n\n"
+    printf "\tRepo NAME will be enabled, all other repoes will be disabled.\n\n"
+
+    printf "\t[-v VERSION]\n\n"
+    printf "\tDefault version is determined by yum.\n\n"
 
     printf "\t[-h]\n\n"
     printf "\tThis help.\n\n"
-
-    printf "\t[VERSION]\n\n"
-    printf "\tElasticsearch Version.\n\n"
     exit 255
 }
 
@@ -31,38 +38,47 @@ install_gpg_key () {
 }
 
 install_yum_repo () {
-    local url='https://gist.githubusercontent.com/alexzhangs/d0c858520f79de71543393aa45dccf61/raw/4a01fd8eff1274cd2709387b7e5b214e778eb310/elasticsearch.repo'
-    wget -c -O /etc/yum.repos.d/elasticsearch.repo "$url"
+    local url=$1
+    curl -L -o /etc/yum.repos.d/elasticsearch.repo "$url"
 }
 
 
-while getopts fh opt; do
+while getopts f:r:n:v:h opt; do
     case $opt in
         f)
-            from_file=1
+            pkg_file=$OPTARG
+            ;;
+        r)
+            repo_file=$OPTARG
+            ;;
+        n)
+            repo_name=$OPTARG
+            ;;
+        v)
+            version=$OPTARG
             ;;
         h|*)
             usage
             ;;
     esac
 done
-shift $((OPTIND -1))
 
-VERSION=$1
-
-if [[ $from_file -ne 1 ]]; then
+if [[ -n $pkg_file ]]; then
+    yum install -y "$pkg_file"
+    exit
+elif [[ -n $repo_url ]]; then
     install_gpg_key
-    install_yum_repo
+    install_yum_repo "$repo_file"
 fi
 
-if [[ -n $VERSION ]]; then
-    package=elasticsearch-$VERSION
+if [[ -n $version ]]; then
+    package=elasticsearch-$version
 else
     package=elasticsearch
 fi
 
-if [[ $from_file -eq 1 ]]; then
-    yum install -y "$BASE_DIR/files/$package.rpm"
+if [[ -n $repo_name ]]; then
+    yum install --disablerepo=* --enablerepo=$repo_name -y "$package"
 else
     yum install -y "$package"
 fi

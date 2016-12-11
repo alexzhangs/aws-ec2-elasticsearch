@@ -39,7 +39,7 @@ install_gpg_key () {
 
 install_yum_repo () {
     local url=$1
-    curl -L -o /etc/yum.repos.d/elasticsearch.repo "$url"
+    curl -vL -o /etc/yum.repos.d/elasticsearch.repo "$url"
 }
 
 
@@ -66,7 +66,7 @@ done
 if [[ -n $pkg_file ]]; then
     yum install -y "$pkg_file"
     exit
-elif [[ -n $repo_url ]]; then
+elif [[ -n $repo_file ]]; then
     install_gpg_key
     install_yum_repo "$repo_file"
 fi

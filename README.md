@@ -11,7 +11,8 @@ git clone https://github.com/alexzhangs/aws-ec2-elasticsearch.git
 
 ## Installation Elasticsearch
 
-Start from Elasticsearch 5.x, it requires java 1.8.
+Since Elasticsearch 5.x, it requires java 1.8.
+
 First upgrade java version from 1.7 to 1.8 if needs.
 
 ```
@@ -49,7 +50,7 @@ sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh \
     -r https://gist.github.com/alexzhangs/d0c858520f79de71543393aa45dccf61/raw
 ```
 
-In case there's other yum repo enabled, you want install Elasticsearch
+In case there's other yum repo enabled, you may want to install Elasticsearch
 from some repo only, e.g. `elastic-5.x` here, use:
 
 ```
@@ -59,7 +60,7 @@ sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh \
 ```
 
 Or you can install Elasticsearch from a RPM file path or URL, this is
-useful if experiencing slow network during package download from yum repo.
+useful if experiencing slow network during downloading package from yum repo.
 
 from local file:
 
@@ -78,7 +79,7 @@ sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh \
 See script help:
 
 ```
-sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh -h
+sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-install.sh -h
 ```
 
 ## Setup Elasticsesarch
@@ -93,5 +94,5 @@ It's able to specify cluster name and other settings, and install plugins
 by the script, see script help:
 
 ```
-sudo sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-setup.sh -h
+sh aws-ec2-elasticsearch/aws-ec2-elasticsearch-setup.sh -h
 ```

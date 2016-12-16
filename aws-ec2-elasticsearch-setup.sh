@@ -74,8 +74,12 @@ calc_es_heap_size () {
 }
 
 
+cluster_name='esonaws'
 plugins=()
 settings=()
+listen='private'
+port=9200
+
 while getopts n:p:s:l:o:h opt; do
     case $opt in
         n)
@@ -98,18 +102,6 @@ while getopts n:p:s:l:o:h opt; do
             ;;
     esac
 done
-
-if [[ -z $cluster_name ]]; then
-    cluster_name='esonaws'
-fi
-
-if [[ -z $listen ]]; then
-    listen='private'
-fi
-
-if [[ -z $port ]]; then
-    port=9200
-fi
 
 # plugins
 

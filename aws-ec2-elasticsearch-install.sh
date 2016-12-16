@@ -42,6 +42,7 @@ install_yum_repo () {
     curl -vL -o /etc/yum.repos.d/elasticsearch.repo "$url"
 }
 
+package=elasticsearch
 
 while getopts f:r:n:v:h opt; do
     case $opt in
@@ -55,7 +56,7 @@ while getopts f:r:n:v:h opt; do
             repo_name=$OPTARG
             ;;
         v)
-            version=$OPTARG
+            package=$package-$OPTARG
             ;;
         h|*)
             usage
@@ -69,12 +70,6 @@ else
     if [[ -n $repo_file ]]; then
         install_gpg_key
         install_yum_repo "$repo_file"
-    fi
-
-    if [[ -n $version ]]; then
-        package=elasticsearch-$version
-    else
-        package=elasticsearch
     fi
 
     if [[ -n $repo_name ]]; then

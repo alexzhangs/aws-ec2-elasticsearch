@@ -9,7 +9,7 @@ sudo yum install -y git
 git clone https://github.com/alexzhangs/aws-ec2-elasticsearch.git
 ```
 
-## Installation Elasticsearch
+## Install Elasticsearch
 
 Since Elasticsearch 5.x, it requires java 1.8.
 

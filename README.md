@@ -2,6 +2,8 @@
 
 Install Elasticsearch on AWS EC2 instance.
 
+Tested with Elasticsearch 5.x.
+
 ## Get code
 
 ```
